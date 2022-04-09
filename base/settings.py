@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import re
 from .secret import DATABASES, REDIS_HOST
+from django.apps import apps
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,6 +33,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'django_extensions',
     'tokenmiddleware',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -124,6 +126,10 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ASGI_APPLICATION = 'base.asgi.application'
 
+GRAPH_MODELS = {
+    'app_labels': [n for n in INSTALLED_APPS if not 'django' in n]
+}
+print(GRAPH_MODELS.get('app_labels'))
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
