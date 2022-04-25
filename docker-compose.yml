@@ -4,7 +4,7 @@ services:
   django:
     build: .
     command: "sh command.sh ${PORT}"
-    container_name: boiler
+    container_name: ${CONTAINER_NAME}
     hostname: root
     volumes:
       - .:/usr/src/app
