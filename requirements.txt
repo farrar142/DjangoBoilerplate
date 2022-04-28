@@ -18,3 +18,5 @@ graphviz
 pygraphviz
 pydot
 python-dotenv
+pillow
+django-cors-headers

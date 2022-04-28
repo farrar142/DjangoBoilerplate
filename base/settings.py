@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -77,6 +78,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'base.wsgi.application'
 
 
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
+
+
+MAX_UPLOAD_SIZE = 5242880
+DATA_UPLOAD_MAX_MEMORY_SIZE = None
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880
+DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -120,7 +131,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR/'static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -130,7 +144,6 @@ ASGI_APPLICATION = 'base.asgi.application'
 GRAPH_MODELS = {
     'app_labels': [n for n in INSTALLED_APPS if not 'django' in n]
 }
-print(GRAPH_MODELS.get('app_labels'))
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
