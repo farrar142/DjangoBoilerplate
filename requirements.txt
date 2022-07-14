@@ -14,9 +14,8 @@ django-extensions
 orjson
 uvicorn
 websockets
-graphviz
-pygraphviz
 pydot
 python-dotenv
 pillow
 django-cors-headers
+django-ninja-jwt
