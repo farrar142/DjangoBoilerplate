@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import re
-from .secret import DATABASES, REDIS_HOST
+import os
 from dotenv import load_dotenv
 from django.apps import apps
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -35,7 +35,6 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'django_extensions',
-    'tokenmiddleware',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -53,7 +52,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'tokenmiddleware.middleware.TokenMiddleware'
 ]
 
 ROOT_URLCONF = 'base.urls'
@@ -90,8 +88,6 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = DATABASES
 
 
 # Password validation
@@ -141,9 +137,24 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ASGI_APPLICATION = 'base.asgi.application'
 
-GRAPH_MODELS = {
-    'app_labels': [n for n in INSTALLED_APPS if not 'django' in n]
+REDIS_HOST = os.getenv("REDIS_HOST")
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv("DB_NAME"),
+        'USER': os.getenv("DB_USER"),
+        'PASSWORD': os.getenv("DB_PASSWORD"),
+        'HOST': os.getenv("DB_HOST"),
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
+            'use_unicode': True,
+        },
+    },
 }
+
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',

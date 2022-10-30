@@ -3,7 +3,7 @@ FROM python:3.10-alpine
 WORKDIR /usr/src/app
 
 COPY . .
-
+RUN apk add git
 RUN apk update \
     && apk add --virtual build-deps gcc python3-dev musl-dev libc-dev  graphviz-dev libffi-dev\
     && apk add --no-cache mariadb-dev

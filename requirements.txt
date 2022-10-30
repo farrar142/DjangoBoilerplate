@@ -19,3 +19,4 @@ python-dotenv
 pillow
 django-cors-headers
 django-ninja-jwt
+autopep8
