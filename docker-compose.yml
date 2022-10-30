@@ -1,8 +1,11 @@
 # redis-server.yml
 version: '3.7'
 services:
-  django:
-    build: .
+  dev:
+    build:
+      dockerfile: docker/dev/dockerfile
+      context: .
+    # command: "python3 manage.py runserver 0.0.0.0:8000"
     command: tail -f /dev/null
     container_name: ${CONTAINER_NAME}
     hostname: root
@@ -10,5 +13,8 @@ services:
       - .:/usr/src/app
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - '${PORT}:${PORT}'
+      - '${PORT}:8000'
     restart: unless-stopped
+    working_dir: /usr/src/app
+    environment:
+      TZ: 'Asia/Seoul'

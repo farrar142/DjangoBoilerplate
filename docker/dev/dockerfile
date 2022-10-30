@@ -1,0 +1,20 @@
+FROM python:3.10-alpine
+
+WORKDIR /usr/src/app
+
+#Docker
+
+RUN apk add py3-autopep8 docker docker-compose git openssh
+RUN apk add openrc --no-cache
+RUN rc-update add docker boot
+RUN adduser -u 1000 -G docker -h /home/docker -D docker
+
+#Applications
+COPY . .
+RUN apk add git
+RUN apk update \
+    && apk add --virtual build-deps gcc python3-dev musl-dev libc-dev  graphviz-dev libffi-dev\
+    && apk add --no-cache mariadb-dev
+RUN pip3 install -r requirements.txt
+RUN apk del build-deps
+RUN apk add graphviz

@@ -15,6 +15,7 @@ import re
 import os
 from dotenv import load_dotenv
 from django.apps import apps
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -138,7 +139,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ASGI_APPLICATION = 'base.asgi.application'
 
 REDIS_HOST = os.getenv("REDIS_HOST")
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -175,7 +175,6 @@ CHANNEL_LAYERS = {
         },
     },
 }
-CSRF_TRUSTED_ORIGINS = ['']
 
 CELERY_BROKER_URL = REDIS_HOST
 CELERY_RESULT_BACKEND = REDIS_HOST
